@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="author" content="Anton Shatokhin">
+    <meta name="description" content="Home page for user">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/default.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="all">
+    <script type="text/javascript" src="js/movies.js"></script>
+    <script type="text/javascript" src="js/cinemas.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="header">
+            <header>
+
+                <div id="navbar">
+                    <h1><a href="home.html">HOME</a>
+                        <a href="nowshowing.html">NOW SHOWING</a>
+                        <a href="ticket.html">TICKET</a>
+                    </h1>
+                </div>
+                <div id="name_logo">
+                    <img src="static/freedom_cinema.jpg" alt="Here should be my our logo." id="logo">
+                    <h1>Freedom Cinema</h1>
+
+                </div>
+            </header>
+        </div>
+        <h1 id="places">Places booked</h1>
+
+        <script>
+            function create_part(name_for, text1, text2, info, flag) {
+                var lab_cinema = document.createElement("label");
+                lab_cinema.setAttribute("for", name_for);
+                lab_cinema.innerHTML = text1;
+                var input_cin = document.createElement("input");
+                input_cin.setAttribute("type", "text");
+                input_cin.setAttribute("class", "name");
+                input_cin.setAttribute("id", name_for);
+                input_cin.setAttribute("value", text2);
+                input_cin.setAttribute("readonly", true);
+                info.appendChild(lab_cinema);
+                lab_cinema.after(input_cin);
+                var br = document.createElement("br");
+                if (!flag) {
+                    input_cin.after(br);
+                }
+            }
+            window.onload = function() {
+                var rows = sessionStorage.getItem("row");
+                var seats = sessionStorage.getItem("seat");
+                var sz = rows.length;
+                var prev = document.getElementById("places");
+                for (let i = 0; i < sz; i++) {
+                    var info = document.createElement("div");
+                    info.setAttribute("class", "a");
+                    prev.after(info);
+                    prev = info;
+                    create_part("name1", "Cinema name: ", sessionStorage.getItem("cinema"), prev, false);
+                    create_part("name2", "Movie name: ", sessionStorage.getItem("movie"), prev, false);
+                    create_part("name3", "Date and time: ", sessionStorage.getItem("time"), prev, false);
+                    create_part("name4", "House: ", sessionStorage.getItem("house"), prev, false);
+                    create_part("name5", "Seat: ", rows[i] + seats[i], prev, true);
+                }
+            }
+        </script>
+        <div id="footer">
+            <footer>
+                <h2 id="copyright">@Copyright of resources belong to corresponding copyright owners - fair use for education purpose.
+                </h2>
+                <div id="down_text">
+                    <h1><a href="home.html">HOME</a>
+                        <a href="design.html">DESIGN</a>
+                    </h1>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

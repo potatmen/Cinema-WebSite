@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="author" content="Anton Shatokhin">
+    <meta name="description" content="Home page for user">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/default.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/ticket.css" type="text/css" media="all">
+    <script type="text/javascript" src="js/movies.js"></script>
+    <script type="text/javascript" src="js/cinemas.js"></script>
+    <title>Ticket</title>
+    <script>
+        window.onload = function() {
+            sessionStorage.setItem("row", "");
+            sessionStorage.setItem("seat", "");
+            var x = getCinemas();
+            var y = getMovies();
+            var info = location.search.substring(1).split("&");
+            var add_to = document.getElementById("show_info");
+            var par = info[0].split("=")[1].split("_");
+            var cin = document.createElement("h3");
+            cin.innerHTML = "Cinema name: " + x[par[0]].branchName;
+            add_to.appendChild(cin);
+            sessionStorage.setItem("cinema", x[par[0]].branchName);
+            var mov = document.createElement("h3");
+            mov.innerHTML = "Movie name: " + y[x[par[0]].movies[par[1]].id - 1].name;
+            sessionStorage.setItem("movie", y[x[par[0]].movies[par[1]].id - 1].name);
+            add_to.appendChild(mov);
+            var dat = document.createElement("h3");
+            dat.innerHTML = "Date and time: " + x[par[0]].movies[par[1]].shows[par[2]].datetime;
+            add_to.appendChild(dat);
+            sessionStorage.setItem("time", x[par[0]].movies[par[1]].shows[par[2]].datetime);
+            var ho = document.createElement("h3");
+            ho.innerHTML = "House: " + x[par[0]].movies[par[1]].shows[par[2]].house;
+            sessionStorage.setItem("house", "" + x[par[0]].movies[par[1]].shows[par[2]].house);
+            add_to.appendChild(ho);
+        }
+
+
+        function booking(row, seat) {
+            var x = sessionStorage.getItem("row");
+            x += row;
+            sessionStorage.setItem("row", x);
+            x = sessionStorage.getItem("seat");
+            x += seat;
+            sessionStorage.setItem("seat", x);
+            var chosen = document.getElementById("chosen");
+            var b_seat = sessionStorage.getItem("seat");
+            var b_row = sessionStorage.getItem("row");
+            var places = "";
+            for (let i = 0; i < b_seat.length; i++) {
+                places += b_row[i];
+                places += b_seat[i] + " ";
+            }
+            chosen.innerHTML = "Chosen seats: " + places;
+            var but = document.getElementById("" + row + seat);
+            but.setAttribute("disabled", false);
+            but.style.background = "green";
+        }
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <header>
+
+            <div id="navbar">
+                <h1><a href="home.html">HOME</a>
+                    <a href="nowshowing.html">NOW SHOWING</a>
+                    <a href="ticket.html" id="ticket">TICKET</a>
+                </h1>
+            </div>
+            <div id="name_logo">
+                <img src="static/freedom_cinema.jpg" alt="Here should be my our logo." id="logo">
+                <h1>Freedom Cinema</h1>
+            </div>
+        </header>
+    </div>
+    <div class="a">
+        <div class="text" id="show_info">
+        </div>
+    </div>
+    <div class="a">
+        <form action="print.html">
+
+            <div class="house">
+                <h1 id="screen">SCREEN</h1>
+                <form>
+                    <div class="row">
+                        <h1 class="rowname">ROW A</h1>
+                        <button id="A1" type="button" class="rowbut" onclick="booking('A',1)">1</button>
+                        <button id="A2" type="button" class="rowbut" onclick="booking('A',2)">2</button>
+                        <button id="A3" type="button" class="rowbut" onclick="booking('A',3)">3</button>
+                        <button id="A4" type="button" class="rowbut" onclick="booking('A',3)">4</button>
+                        <button id="A5" type="button" class="rowbut" onclick="booking('A',3)">5</button>
+
+                    </div>
+                    <div class="row">
+                        <h1 class="rowname">ROW B</h1>
+                        <button id="B1" type="button" class="rowbut" onclick="booking('B',1)">1</button>
+                        <button id="B2" type="button" class="rowbut" onclick="booking('B',2)">2</button>
+                        <button id="B3" type="button" class="rowbut" onclick="booking('B',3)">3</button>
+                        <button id="B4" type="button" class="rowbut" onclick="booking('B',4)">4</button>
+                        <button id="B5" type="button" class="rowbut" onclick="booking('B',5)">5</button>
+
+                    </div>
+                    <div class="row">
+                        <h1 class="rowname">ROW C</h1>
+                        <button id="C1" type="button" class="rowbut" onclick="booking('C',1)">1</button>
+                        <button id="C2" type="button" class="rowbut" onclick="booking('C',2)">2</button>
+                        <button id="C3" type="button" class="rowbut" onclick="booking('C',3)">3</button>
+                        <button id="C4" type="button" class="rowbut" onclick="booking('C',4)">4</button>
+                        <button id="C5" type="button" class="rowbut" onclick="booking('C',5)">5</button>
+
+                    </div>
+                </form>
+
+                <h3 id="chosen"></h3>
+                <input name="form" type="submit" value="Confirm" id="confirm">
+        </form>
+        </div>
+    </div>
+    <div id="footer">
+        <footer>
+            <h2 id="copyright">@Copyright of resources belong to corresponding copyright owners - fair use for education purpose.
+            </h2>
+            <div id="down_text">
+                <h1><a href="home.html">HOME</a>
+                    <a href="design.html">DESIGN</a>
+                </h1>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

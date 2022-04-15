@@ -1,0 +1,32 @@
+#places{
+    text-align: center;
+    border: 4mm ridge rgba(211, 220, 50, .6);
+    margin: 10px 800px 10px 800px;
+}
+.a{
+    page-break-after: always;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.name{
+    font-size: 20px;
+    width: 250px;
+}
+
+label{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+@media print {
+    #navbar, #name_logo, #footer, #places {
+       display: none;
+    }
+    .a{
+        display: block;
+    }
+ }

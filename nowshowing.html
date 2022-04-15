@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="author" content="Anton Shatokhin">
+    <meta name="description" content="Home page for user">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/default.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/nowshowing.css" type="text/css" media="all">
+    <script type="text/javascript" src="js/movies.js"></script>
+    <script type="text/javascript" src="js/cinemas.js"></script>
+    <title>Nowshowing</title>
+</head>
+
+<body>
+    <div>
+        <div id="header">
+            <header>
+                <div id="navbar">
+                    <h1><a href="home.html">HOME</a>
+                        <a href="nowshowing.html" id="nowshowing">NOW SHOWING</a>
+                        <a href="ticket.html">TICKET</a>
+                    </h1>
+                </div>
+                <div id="name_logo">
+                    <img src="static/freedom_cinema.jpg" alt="Here should be my our logo." id="logo">
+                    <h1>Freedom Cinema</h1>
+
+                </div>
+            </header>
+        </div>
+        <div id="select">
+            <script>
+                function show_content(after_this, cinema, id) {
+                    var del = document.getElementById("cinema_info");
+                    del.remove();
+                    var x = getMovies();
+                    var content = document.createElement("div");
+                    content.id = "cinema_info";
+                    after_this.after(content);
+                    var prev;
+                    for (let i = 0; i < cinema.movies.length; i++) {
+                        var movie = document.createElement("div");
+                        movie.setAttribute("class", "a");
+                        if (i == 0) {
+                            content.appendChild(movie);
+                            prev = movie;
+                        } else {
+                            prev.after(movie);
+                        }
+                        var form = document.createElement("form");
+                        form.setAttribute("action", "ticket.html");
+                        form.setAttribute("method", "get");
+                        form.setAttribute("name", "form");
+                        movie.appendChild(form);
+                        var geni = document.createElement("div");
+                        geni.id = "image";
+                        form.appendChild(geni);
+                        var image = document.createElement("img");
+                        image.src = "static/" + x[cinema.movies[i].id - 1].thumbnail;
+                        image.setAttribute("class", "photo1");
+                        geni.appendChild(image);
+                        var shows = cinema.movies[i].shows;
+                        var genc = document.createElement("div");
+                        genc.id = "content";
+                        geni.after(genc);
+                        var name = document.createElement("h3");
+                        name.innerHTML = x[cinema.movies[i].id - 1].name;
+                        genc.appendChild(name);
+                        var label_time = document.createElement("label");
+                        label_time.setAttribute("for", "select_time");
+                        label_time.innerHTML = "Select time and house: ";
+                        name.after(label_time);
+                        var sel_time = document.createElement("select");
+                        sel_time.setAttribute("name", "sel_time");
+                        sel_time.id = "select_time";
+                        sel_time.setAttribute("class", "select_time");
+                        label_time.after(sel_time);
+                        var prev1;
+                        for (let j = 0; j < shows.length; j++) {
+                            var option_time = document.createElement("option");
+                            option_time.innerHTML = shows[j].datetime + ", House number " + shows[j].house;
+                            option_time.setAttribute("value", id + "_" + i + "_" + j);
+                            if (j == 0) {
+                                option_time.setAttribute("selected", "selected");
+                                sel_time.appendChild(option_time);
+                                prev1 = option_time;
+                            } else {
+                                prev1.after(option_time);
+                            }
+                        }
+                        var but = document.createElement("input");
+                        but.setAttribute("type", "submit");
+                        but.setAttribute("value", "Buy Ticket");
+                        but.setAttribute("class", "but");
+                        genc.after(but);
+                    }
+
+                }
+
+                window.onload = function() {
+                    var cinemas = getCinemas();
+                    var all = document.getElementById("select");
+                    var label = document.createElement("label");
+                    label.setAttribute("for", "choose_cinema");
+                    label.innerHTML = "Choose your Cinema: ";
+                    all.appendChild(label);
+                    var select = document.createElement("select");
+                    select.id = "choose_cinema";
+                    select.onchange = function() {
+                        show_content(document.getElementById("list"), cinemas[select.options[select.selectedIndex].value], select.options[select.selectedIndex].value);
+                    }
+                    label.after(select);
+                    var prev;
+                    for (let i = 0; i < cinemas.length; i++) {
+                        var option = document.createElement("option");
+                        option.innerHTML = cinemas[i].branchName;
+                        option.setAttribute("value", i);
+                        if (i == 0) {
+                            select.appendChild(option);
+                            prev = option;
+                        } else {
+                            prev.after(option);
+                            prev = option;
+                        }
+                    }
+                    show_content(document.getElementById("list"), cinemas[0], 0);
+                }
+            </script>
+
+        </div>
+        <h2 id="list">List of films in selected cinema</h2>
+        <div id="cinema_info"></div>
+        <div class="loc">
+            <h2>Locations of Cinemas</h2>
+            <div class="b">
+                <img src="locations/Brodway.png" alt="Here should be location." class="loc1">
+                <div class="ad">
+                    <h3>Cinema: Broadway Cinema</h3>
+                    <h3>Address: Chung Shun Building, 6-12 Sai Yeung Choi St S, Mong Kok, Hong Kong</h3>
+                </div>
+            </div>
+            <div class="b">
+
+                <img src="locations/Cityplaza.png" alt="Here should be location." class="loc1">
+                <div class="ad">
+                    <h3>Cinema: MOViE MOViE Cityplaza</h3>
+                    <h3>Address: Cityplaza, 18 Tai Koo Shing Rd, Quarry Bay, Hong Kong</h3>
+                </div>
+            </div>
+            <div class="b">
+
+                <img src="locations/Grand.png" alt="Here should be location." class="loc1">
+                <div class="ad">
+                    <h3>Cinema: Grand Windsor Cinema</h3>
+                    <h3>Address: 311 Gloucester Rd, Causeway Bay, Hong Kong</h3>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <footer>
+                <h2 id="copyright">@Copyright of resources belong to corresponding copyright owners - fair use for education purpose.
+                </h2>
+                <div id="down_text">
+                    <h1><a href="home.html">HOME</a>
+                        <a href="design.html">DESIGN</a>
+                    </h1>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

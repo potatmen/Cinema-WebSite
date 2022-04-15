@@ -1,0 +1,95 @@
+#nowshowing {
+    pointer-events: none;
+}
+
+select {
+    margin-right: 10px;
+}
+
+#select {
+    text-align: center;
+}
+
+#select label {
+    font-weight: bold;
+    font-size: xx-large
+}
+
+#choose_cinema {
+    font-size: 25px;
+}
+
+#list {
+    text-align: center;
+    border: 4mm ridge rgba(211, 220, 50, .6);
+    margin-left: 750px;
+    margin-right: 750px;
+    background-color: aliceblue;
+}
+
+img {
+    cursor: pointer;
+}
+
+.a {
+    display: inline-block;
+    padding: 20px 20px 20px 20px;
+    margin-left: 35px;
+    border: solid;
+    text-align: center;
+    font-size: 20px;
+}
+
+.photo1 {
+    width: 150px;
+    height: 120px;
+}
+
+.loc1 {
+    width: 500px;
+    height: 350px;
+}
+
+.select_time {
+    font-size: 15px;
+}
+
+.select_house {
+    font-size: 15px;
+}
+
+.loc {
+    text-align: center;
+}
+
+.loc h2 {
+    background-color: aliceblue;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: xx-large;
+}
+
+.b {
+    border: solid;
+    margin-left: 500px;
+    margin-right: 500px;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.ad {
+    border: 4mm ridge rgba(211, 220, 50, .6);
+    margin: 10px 50px 10px 50px;
+}
+
+.but {
+    margin-bottom: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    margin-top: 10px;
+}
+
+.but:hover {
+    background-color: green;
+}

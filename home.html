@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="author" content="Anton Shatokhin">
+    <meta name="description" content="Home page for user">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/default.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/home.css" type="text/css" media="all">
+    <script type="text/javascript" src="js/movies.js"></script>
+    <script type="text/javascript" src="js/cinemas.js"></script>
+    <title>Home</title>
+
+
+</head>
+
+<body>
+    <div>
+        <div class="header">
+            <header>
+
+                <div id="navbar">
+                    <h1><a href="home.html" class="home">HOME</a>
+                        <a href="nowshowing.html">NOW SHOWING</a>
+                        <a href="ticket.html">TICKET</a>
+                    </h1>
+                </div>
+                <div id="name_logo">
+                    <img src="static/freedom_cinema.jpg" alt="Here should be my our logo." id="logo">
+                    <h1>Freedom Cinema</h1>
+
+                </div>
+            </header>
+        </div>
+
+        <h1 id="nows">Now showing</h1>
+        <h1 id="upc">Up Coming</h1>
+
+        <script>
+            function load_video(source, general, place, i) {
+                place.src = source[i].src;
+                var del = document.getElementById("video_text");
+                del.remove();
+                var x = document.createElement("div");
+                x.setAttribute("id", "video_text");
+                x.appendChild(create_h3("Name: ", source[i].name));
+                x.appendChild(create_h3("Cast: ", source[i].cast));
+                x.appendChild(create_h3("Director: ", source[i].director));
+                x.appendChild(create_h3("Duration: ", source[i].duration + " mins"));
+
+                general.after(x);
+            }
+
+            function from_which(source, all, vid, i) {
+                load_video(source, all, vid, i);
+                var cnt = i + 1;
+                vid.addEventListener('ended', function() {
+                    setTimeout(function() {
+                        cnt %= source.length;
+                        load_video(source, all, vid, cnt);
+                        cnt += 1;
+                    }, 2000);
+                }, false);
+            }
+
+
+            function create_h3(text, val) {
+                var x = document.createElement("h3");
+                var span = document.createElement("span");
+                span.setAttribute("class", "bold");
+                span.innerHTML = text;
+                x.appendChild(span);
+                x.innerHTML += val;
+                return x;
+            }
+
+
+
+            function add_movie_to(movie, src, name_class) {
+                var x = document.createElement("div");
+                x.setAttribute("class", name_class);
+                var img = document.createElement("img");
+                img.src = "static/" + movie.thumbnail;
+                img.setAttribute("id", movie.id - 1);
+                img.onclick = function() {
+                    from_which(getMovies(), document.getElementById("video"), document.getElementById("play_video"), Number(img.id));
+                }
+                x.appendChild(img);
+                src.after(x);
+                src = x;
+                x = document.createElement("div");
+                x.setAttribute("class", name_class);
+                x.appendChild(create_h3("Name: ", movie.name));
+                x.appendChild(create_h3("Cast: ", movie.cast));
+                x.appendChild(create_h3("Director: ", movie.director));
+                x.appendChild(create_h3("Duration: ", movie.duration + " mins"));
+                src.after(x);
+                return x;
+            }
+
+            function videos_make(source) {
+                var all = document.createElement("div");
+                all.setAttribute("id", "video");
+                var prev = document.querySelector(".header");
+                var vid = document.createElement("video");
+                vid.setAttribute("id", "play_video");
+                vid.autoplay = true;
+                vid.height = 400;
+                vid.controls = "controls";
+                var info = document.createElement("div");
+                info.setAttribute("id", "video_text");
+                all.appendChild(vid);
+                prev.after(all);
+                all.after(info);
+                from_which(source, all, vid, 0);
+            }
+
+            window.onload = function() {
+                var x = getMovies();
+                videos_make(x);
+                var prev = document.getElementById("nows");
+                for (let i = 0; i < 3; i++) {
+                    prev = add_movie_to(x[i], prev, "a");
+                }
+                prev = document.getElementById("upc");
+                for (let i = 3; i < 6; i++) {
+                    prev = add_movie_to(x[i], prev, "b");
+                }
+            }
+        </script>
+
+
+
+
+        <div id="footer">
+            <footer>
+                <h2 id="copyright">@Copyright of resources belong to corresponding copyright owners - fair use for education purpose.
+                </h2>
+                <div id="down_text">
+                    <h1><a href="home.html" class="home">HOME</a>
+                        <a href="design.html">DESIGN</a>
+                    </h1>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

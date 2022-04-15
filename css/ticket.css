@@ -1,0 +1,55 @@
+#ticket{
+    pointer-events: none;
+}
+img{
+    cursor: pointer;
+}
+.a{
+    display: inline-block;
+    margin-left: 20px;
+    font-size: xx-large;    
+    
+}
+
+#screen{
+    margin-left: 200px;
+}
+
+.house{
+    border: solid;
+    margin-right: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+.rowname{
+    display: inline-block;
+}
+
+.rowbut{
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 30px;
+    font-size: 30px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+.rowbut:hover{
+    background-color: green;
+}
+
+#chosen{
+    font-size: 30px;
+}
+
+#confirm{
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+
+#confirm:hover{
+    background-color: green;
+}
